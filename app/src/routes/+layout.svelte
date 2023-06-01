@@ -59,7 +59,7 @@
 					<p></p>
 				</button>
 			</svelte:fragment>
-			<p class='pageTitle'>Weordl</p>
+			<p class='pageTitle'>Weordl T</p>
 			<svelte:fragment slot='trail'>
 				<button on:click={showHowTo}>
 					<IconHowTo />

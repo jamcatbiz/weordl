@@ -1,4 +1,4 @@
-name: Deploy Prod
+name: Build & Deploy
 
 on:
   push:
@@ -10,13 +10,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Switch to app dir
+        run: cd app
+
+      - name: Install packages
+        run: npm install
+
       - name: Build App
-        run: cd app && npm install && npm run build
+        run: npm run build
+
       - name: Deploy build to S3 bucket
-        run: aws s3 sync ./build/ s3://weordl.com --delete
+        run: aws s3 sync ./build/ s3://${{ vars.S3_BUCKET }} --delete
+
+      - name: Invalidate CloudFront
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ vars.DISTRIBUTION }}
+          PATHS: "/*"
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
