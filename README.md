@@ -4,6 +4,7 @@ Weordl is a daily free to play anagram word game. It is a web app built using Sv
 
 ## Contents
 
+:)
 
 ## Developing
 
