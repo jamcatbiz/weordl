@@ -1,19 +1,19 @@
-name: Prod Build & Deploy
+name: Beta Build & Deploy
 
 on:
   push:
     branches:
-    - main
+    - develop
   pull_request:
     branches:
-    - main
+    - develop
 
 jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: prod
-      url: https://weordl.com
+      name: beta
+      url: https://beta.weordl.com
     steps:
       - uses: actions/checkout@v3
 
