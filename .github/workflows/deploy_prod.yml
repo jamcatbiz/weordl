@@ -20,17 +20,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Switch to app dir
-        run: cd app
-
-      - name: Install packages
-        run: npm install
-
-      - name: Build App
-        run: npm run build
+      - name: Build
+        run: cd app && npm install && npm run build
 
       - name: Deploy build to S3 bucket
-        run: aws s3 sync ./build/ s3://${{ vars.S3_BUCKET }} --delete
+        run: aws s3 sync app/build/ s3://${{ vars.S3_BUCKET }} --delete
 
       - name: Invalidate CloudFront
         uses: chetan/invalidate-cloudfront-action@v2
