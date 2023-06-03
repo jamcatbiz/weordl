@@ -61,13 +61,13 @@
 			</svelte:fragment>
 			<p class='pageTitle'>Weordl</p>
 			<svelte:fragment slot='trail'>
-				<button on:click={showHowTo}>
+				<button aria-label='How To' on:click={showHowTo}>
 					<IconHowTo />
 				</button>
-				<button on:click={showStatistics}>
+				<button aria-label='Statistics' on:click={showStatistics}>
 					<IconStatistics />
 				</button>
-				<button on:click={showSettings}>
+				<button aria-label='Settings' on:click={showSettings}>
 					<IconSettings />
 				</button>
 			</svelte:fragment>
