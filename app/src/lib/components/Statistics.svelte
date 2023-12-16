@@ -80,10 +80,16 @@
         <p>Today's total score</p>
         <Scoreboard thisPoints={$points} thisProgress={$progress}/>
         <hr>
-
-        <button class='btn variant-filled-primary' on:click={handleShare}>
-            <p>Share</p> <IconShare />
-        </button>
+        <div>
+            <button class='btn variant-filled-primary' on:click={handleShare}>
+                <p>Share</p> <IconShare />
+            </button>
+        </div>
+        <div>
+            <button class='btn variant-ringed-primary' on:click={modalStore.close}>
+                <p>Play More</p>
+            </button>
+        </div>
 	</div>
 {/if}
 
