@@ -24,12 +24,6 @@
 
 		<hr />
 		<div class="row">
-			<p>👁 Watch an add</p>
-			<p>Coming Soon</p>
-		</div>
-
-		<hr />
-		<div class="row">
 			<p>☕️ Buy Me a Coffee</p>
 			<a
 				href="https://www.buymeacoffee.com/jamcatbiz"
