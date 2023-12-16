@@ -21,17 +21,21 @@
 
         <hr>
         <div class='row'>
-            <p>Watch an add</p><p>Coming Soon</p>
+            <p>👁 Watch an add</p><p>Coming Soon</p>
         </div>
 
         <hr>
         <div class='row'>
-            <p>Donate</p><p>Coming Soon</p>
+            <p>☕️ Buy Me a Coffee</p>
+            <a href='https://www.buymeacoffee.com/jamcatbiz' target='_blank' rel='noopener noreferrer' style='text-decoration:none;display:inline-block'>
+                Donate
+            </a>
+
         </div>
 
         <hr>
         <div class='row'>
-            <p>Contribute</p><p>Coming Soon</p>
+            <p>👩‍💻 Contribute</p><a href='https://github.com/jamcatbiz/weordl' target='_blank' rel='noopener noreferrer' style='text-decoration:none;display:inline-block'>GitHub</a>
         </div>
 	</div>
 {/if}

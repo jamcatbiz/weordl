@@ -44,23 +44,23 @@
 		<header class='text-2xl font-bold'>Settings</header>
 		
 		<div class='row'>
-			<p>Dark mode</p>
+			<p>🔦 Dark mode</p>
 			<LightSwitch ring='ring-2px' bgLight='bg-surface-200' bgDark='bg-surface-700'/>
 		</div>
 
 		<hr>
 		<div class='row'>
-			<p>FeedBack</p> <a href='mailto:james.cate.biz@gmail.com?subject=Weordl%20Feedback'>Email</a>
+			<p>📢 FeedBack</p><a href='mailto:james.cate.biz@gmail.com?subject=Weordl%20Feedback'>Email</a>
 		</div>
 
 		<hr>
 		<div class='row'>
-			<p>Yesterday's Answers</p><button on:click={showYesterdaysAnswers}>Show</button>
+			<p>🔎 Yesterday's Answers</p><button on:click={showYesterdaysAnswers}>Show</button>
 		</div>
 
 		<hr>
 		<div class='row'>
-			<p>Support</p><button on:click={showSupport}>See How</button>
+			<p>💜 Support</p><button on:click={showSupport}>See How</button>
 		</div>
 
 		<hr>
