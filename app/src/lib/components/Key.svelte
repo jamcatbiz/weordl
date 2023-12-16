@@ -42,5 +42,6 @@
 
     @media (hover: none) {
         .key:hover { background-color: rgba(var(--color-surface)/1);}
+        .selected:hover { background-color: rgba(var(--color-primary-500)/.2);}
     }
 </style>
