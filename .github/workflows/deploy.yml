@@ -1,0 +1,103 @@
+name: Prod Infra & App Deploy
+
+on:
+  push:
+    branches:
+    - main
+    - beta
+  
+jobs:
+  infra:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
+          role-session-name: github_actions_deploy_weordl
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.0
+          terraform_wrapper: false
+
+      - name: Terraform Format Check
+        id: fmt
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -input=false -backend-config=./config/${{ github.ref_name }}.s3.tfbackend
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          echo 'plan<<EOF' >> $GITHUB_OUTPUT
+          terraform plan -no-color -input=false -out=tfplan -var-file=${{ github.ref_name }}.tfvars -var='source_control=${{ github.repository }}/${{ github.ref_name }}/${{ github.sha }}'>> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+      
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-plan
+          path: ./terraform/tfplan
+          retention-days: 1
+
+      - name: Terraform Apply
+        id: apply
+        run: |
+          echo 'apply<<EOF' >> $GITHUB_OUTPUT
+          terraform apply -no-color -input=false tfplan >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
+      - name: Upload Terraform Apply Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-apply
+          path: ./terraform/tfapply
+          retention-days: 1
+      
+    outputs: 
+      s3_bucket_id: ${{ steps.apply.outputs.s3_bucket_id }}
+      cloudfront_distribution_id: ${{ steps.apply.outputs.cloudfront_distribution_id }}
+  app:
+    runs-on: ubuntu-latest
+    needs: infra
+    steps:
+      - name: Checkout Repo
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
+          role-session-name: github_actions_deploy_weordl
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Build
+        run: cd app && npm install && npm run build
+
+      - name: Upload App Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: app/build
+          retention-days: 1
+
+      - name: Deploy App Build to S3 Bucket
+        run: aws s3 sync app/build/ s3://${{ needs.infra.outputs.s3_bucket_id }} --delete
+
+      - name: Invalidate CloudFront
+        run: aws create-invalidation --distribution-id ${{ needs.infra.outputs.cloudfront_distribution_id }} --paths '/*'
