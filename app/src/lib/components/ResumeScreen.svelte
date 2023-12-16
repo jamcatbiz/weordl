@@ -1,40 +1,41 @@
-<script>
-	import { dateLocale, resumed, statGamesPlayed, guessesSort, guesses } from '../../store';
+<script lang="ts">
+	import { dateLocale, resumed, guessesSort, guesses } from 'src/store';
 
-	import HowTo from '$lib/components/HowTo.svelte';
-	import Support from '$lib/components/Support.svelte';
+	import HowTo from '$components/HowTo.svelte';
+	import Support from '$components/Support.svelte';
 
 	import { modalStore } from '@skeletonlabs/skeleton';
+  import type { ModalSettings } from '@skeletonlabs/skeleton';
 
-	function showHowTo() {
+	function showHowTo(): void {
 		const c = { ref: HowTo };
-		const modal = {
+		const modal: ModalSettings = {
 			type: 'component',
 			component: c,
-			response: (r) => console.log('response:', r)
+			response: (r: any) => console.log('response:', r)
 		};
 		modalStore.trigger(modal);
 	}
 
-	function showSupport() {
+	function showSupport(): void {
 		const c = { ref: Support };
-		const modal = {
+		const modal: ModalSettings = {
 			type: 'component',
 			component: c,
-			response: (r) => console.log('response:', r)
+			response: (r: any) => console.log('response:', r)
 		};
 		modalStore.trigger(modal);
 	}
 
 	function resume() {
 		resumed.set(true);
-    guessesSort.update((prevGuessesSort) => {
-      const newGuessesSort = prevGuessesSort;
-      for (let guess in $guesses) {
-        newGuessesSort[guess[0].toUpperCase()][guess] = true;
-      }
-      return newGuessesSort;
-    });
+		guessesSort.update((prevGuessesSort) => {
+			const newGuessesSort = prevGuessesSort;
+			for (let guess in $guesses) {
+				newGuessesSort[guess[0].toUpperCase()][guess] = true;
+			}
+			return newGuessesSort;
+		});
 	}
 </script>
 

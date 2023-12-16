@@ -1,12 +1,12 @@
-<script>
-	import { resumed, lastPlayedDate, date } from '../store';
-	
-	import StartScreen from '$lib/components/StartScreen.svelte';
-	import GameScreen from '$lib/components/GameScreen.svelte';
-	import ResumeScreen from '$lib/components/ResumeScreen.svelte';
+<script lang="ts">
+	import { resumed, lastPlayedDate, date } from 'src/store';
+
+	import StartScreen from '$components/StartScreen.svelte';
+	import GameScreen from '$components/GameScreen.svelte';
+	import ResumeScreen from '$components/ResumeScreen.svelte';
 </script>
 
-{#if ($lastPlayedDate != date)}
+{#if $lastPlayedDate != date}
 	<StartScreen />
 {:else if !$resumed}
 	<ResumeScreen />

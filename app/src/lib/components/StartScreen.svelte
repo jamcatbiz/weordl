@@ -1,47 +1,62 @@
-<script>
-    import { dateLocale, date, resumed, elapsedTime, statGamesPlayed, isFirstVisit, lastPlayedDate, gameOverShown, guesses, points, progress, timedPoints, timedProgress } from '../../store';
-    
-    import HowTo from '$lib/components/HowTo.svelte';
-    import Support from '$lib/components/Support.svelte';
+<script lang="ts">
+	import {
+		dateLocale,
+		date,
+		resumed,
+		elapsedTime,
+		statGamesPlayed,
+		isFirstVisit,
+		lastPlayedDate,
+		gameOverShown,
+		guesses,
+		points,
+		progress,
+		timedPoints,
+		timedProgress
+	} from 'src/store';
+
+	import HowTo from '$components/HowTo.svelte';
+	import Support from '$components/Support.svelte';
 
 	import { modalStore } from '@skeletonlabs/skeleton';
+  import type { ModalSettings } from '@skeletonlabs/skeleton';
 
-	function showHowTo() {
+	function showHowTo(): void {
 		const c = { ref: HowTo };
-		const modal = {
+		const modal: ModalSettings = {
 			type: 'component',
 			component: c,
-			response: (r) => console.log('response:', r)
+			response: (r: any) => console.log('response:', r)
 		};
 		modalStore.trigger(modal);
 	}
 
-    function showSupport() {
+	function showSupport(): void {
 		const c = { ref: Support };
-		const modal = {
+		const modal: ModalSettings = {
 			type: 'component',
 			component: c,
-			response: (r) => console.log('response:', r)
+			response: (r: any) => console.log('response:', r)
 		};
 		modalStore.trigger(modal);
 	}
-    
-    function start() {
-        resumed.set(true);
-        lastPlayedDate.set(date);
-        gameOverShown.set(false);
-        guesses.set({});
-        points.set(0);
-        progress.set(0);
-        timedPoints.set(0);
-        timedProgress.set(0);
-        elapsedTime.set(0);
-        statGamesPlayed.set($statGamesPlayed * 1 + 1)
-    }
 
-    if ($isFirstVisit) {   
-        setTimeout(showHowTo, 3000)     
-    }
+	function start(): void {
+		resumed.set(true);
+		lastPlayedDate.set(date);
+		gameOverShown.set(false);
+		guesses.set({});
+		points.set(0);
+		progress.set(0);
+		timedPoints.set(0);
+		timedProgress.set(0);
+		elapsedTime.set(0);
+		statGamesPlayed.set($statGamesPlayed * 1 + 1);
+	}
+
+	if ($isFirstVisit) {
+		setTimeout(showHowTo, 3000);
+	}
 </script>
 
 <hr />
