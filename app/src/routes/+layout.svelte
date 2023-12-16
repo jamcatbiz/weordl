@@ -7,6 +7,7 @@
 	import IconHowTo from '~icons/fa6-regular/circle-question'
 	import IconStatistics from '~icons/fa6-solid/chart-column'
 	import IconSettings from '~icons/fa6-solid/gear'
+	import IconBars from '~icons/fa6-solid/bars'
 
 	import { AppShell } from '@skeletonlabs/skeleton';
 	import { AppBar } from '@skeletonlabs/skeleton';
@@ -55,9 +56,7 @@
 	<svelte:fragment slot='header'>
 		<AppBar background='bg' gridColumns='grid-cols-3' slotDefault='place-self-center' slotTrail='place-content-end'>
 			<svelte:fragment slot='lead'>
-				<button>
-					<p></p>
-				</button>
+				<IconBars />
 			</svelte:fragment>
 			<p class='pageTitle'>Weordl</p>
 			<svelte:fragment slot='trail'>
