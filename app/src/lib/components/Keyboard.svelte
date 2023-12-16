@@ -1,5 +1,5 @@
 <script>
-    import { game, guess, guesses, isGuessed, guessesSort, progress, points, timedPoints, timedProgress, elapsedTime, timerDuration } from '../../store';
+    import { game, guess, guesses, isGuessed, guessesSort, progress, points, timedPoints, timedProgress, elapsedTime, timerDuration, statWordsFound } from '../../store';
 
     import Key from '$lib/components/Key.svelte';
 
@@ -86,6 +86,8 @@
                 newGuessesSort[$guess[0]][thisGuess] = (thisGuess in game.answers);
                 return newGuessesSort;
             });
+
+            statWordsFound.set($statWordsFound * 1 + 1)
 
             points.update((prevPoints) => {
                 return prevPoints + game.answers[thisGuess]['points']*10;

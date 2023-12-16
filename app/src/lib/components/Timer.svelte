@@ -10,6 +10,13 @@
 	let last_time = window.performance.now();
     let frame;
 
+    const c = { ref: Statistics };
+    const finishModal = {
+        type: 'component',
+        component: c,
+        response: (r) => console.log('response:', r)
+    };
+
     (function update() {
         frame = requestAnimationFrame(update);
 		const time = window.performance.now()
@@ -30,13 +37,6 @@
 	onDestroy(() => {
 		cancelAnimationFrame(finishModal);
 	});
-
-    const c = { ref: Statistics };
-    const finishModal = {
-        type: 'component',
-        component: c,
-        response: (r) => console.log('response:', r)
-    };
 
 </script>
 

@@ -1,7 +1,7 @@
 <script>
     export const parent = 0;
 
-    import { points, progress, timedProgress, timedPoints, game } from '../../store';
+    import { points, progress, timedProgress, timedPoints, game, statGamesPlayed, statWordsFound } from '../../store';
 
     import Scoreboard from './Scoreboard.svelte';
     import StatisticsItem from './StatisticsItem.svelte';
@@ -68,9 +68,8 @@
 		<header class='text-2xl font-bold'>Stats</header>
         
         <div class='statContainer'>
-            <StatisticsItem number=0 text='games played'/>
-            <StatisticsItem number=0 text='words found'/>
-            <StatisticsItem number=0 text='average percent'/>
+            <StatisticsItem number={$statGamesPlayed} text='games played'/>
+            <StatisticsItem number={$statWordsFound} text='words found'/>
         </div>
 
         <hr>

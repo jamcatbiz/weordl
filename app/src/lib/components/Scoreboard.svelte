@@ -30,9 +30,7 @@
         if (navigator.share) {
             try {
                 await navigator.share({
-                    title: 'weordl.com',
-                    text: message,
-                    url: 'https://weordl.com'
+                    text: message
                 })
                 toastStore.trigger(shareToast)
             } catch (err) {

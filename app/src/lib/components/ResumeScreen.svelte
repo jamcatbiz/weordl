@@ -1,8 +1,8 @@
 <script>
-    import { dateLocale, date, resumed, elapsedTime, statGamesPlayed, isFirstVisit, lastPlayedDate, gameOverShown, guesses, points, progress, timedPoints, timedProgress } from '../../store';
-    
-    import HowTo from '$lib/components/HowTo.svelte';
-    import Support from '$lib/components/Support.svelte';
+	import { dateLocale, resumed, statGamesPlayed, guessesSort, guesses } from '../../store';
+
+	import HowTo from '$lib/components/HowTo.svelte';
+	import Support from '$lib/components/Support.svelte';
 
 	import { modalStore } from '@skeletonlabs/skeleton';
 
@@ -16,7 +16,7 @@
 		modalStore.trigger(modal);
 	}
 
-    function showSupport() {
+	function showSupport() {
 		const c = { ref: Support };
 		const modal = {
 			type: 'component',
@@ -25,31 +25,25 @@
 		};
 		modalStore.trigger(modal);
 	}
-    
-    function start() {
-        resumed.set(true);
-        lastPlayedDate.set(date);
-        gameOverShown.set(false);
-        guesses.set({});
-        points.set(0);
-        progress.set(0);
-        timedPoints.set(0);
-        timedProgress.set(0);
-        elapsedTime.set(0);
-        statGamesPlayed.set($statGamesPlayed * 1 + 1)
-    }
 
-    if ($isFirstVisit) {   
-        setTimeout(showHowTo, 3000)     
-    }
+	function resume() {
+		resumed.set(true);
+    guessesSort.update((prevGuessesSort) => {
+      const newGuessesSort = prevGuessesSort;
+      for (let guess in $guesses) {
+        newGuessesSort[guess[0].toUpperCase()][guess] = true;
+      }
+      return newGuessesSort;
+    });
+	}
 </script>
 
 <hr />
 <div class="startscreen">
-	<p class="opener">Find words by reordering letters.</p>
+	<p class="opener">Keep playing today's game?</p>
 
 	<div>
-		<button class="btn variant-filled-primary" on:click={start}>Play</button>
+		<button class="btn variant-filled-primary" on:click={resume}>Continue</button>
 	</div>
 	<div>
 		<button class="btn variant-ringed-primary" on:click={showHowTo}>How To</button>
