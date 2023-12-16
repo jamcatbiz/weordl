@@ -24,7 +24,7 @@ jobs:
         run: cd app && npm install && npm run build
 
       - name: Deploy build to S3 bucket
-        run: aws s3 sync app/build/ s3://${{ vars.S3_BUCKET }} --delete
+        run: aws s3 sync app/build/ s3://${{ vars.AWS_S3_BUCKET }} --delete
 
       - name: Invalidate CloudFront
         uses: chetan/invalidate-cloudfront-action@v2
