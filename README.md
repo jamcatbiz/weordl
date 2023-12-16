@@ -2,6 +2,9 @@
 # Weordl
 Weordl is a daily free to play anagram word game. It is a web app built using SvelteKit for frontend, AWS CloudFront -> S3 SPA backend, and github actions CI/CD.
 
+## Contents
+
+
 ## Developing
 
 Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
