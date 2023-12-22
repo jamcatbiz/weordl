@@ -9,6 +9,8 @@ on:
 jobs:
   infra:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref_name }}
     defaults:
       run:
         working-directory: ./terraform
@@ -75,6 +77,8 @@ jobs:
   app:
     runs-on: ubuntu-latest
     needs: infra
+    environment:
+      name: ${{ github.ref_name }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
