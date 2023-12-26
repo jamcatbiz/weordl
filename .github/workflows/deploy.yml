@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.ref_name }}
+    permissions:
+      id-token: write
+      contents: read
     defaults:
       run:
         working-directory: ./terraform
@@ -22,7 +25,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
-          role-session-name: github_actions_deploy_weordl
+          role-session-name: github_actions_deploy_infra_weordl
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Install Terraform
@@ -79,6 +82,9 @@ jobs:
     needs: infra
     environment:
       name: ${{ github.ref_name }}
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -87,7 +93,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
-          role-session-name: github_actions_deploy_weordl
+          role-session-name: github_actions_deploy_app_weordl
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Build
