@@ -82,9 +82,10 @@ resource "aws_cloudfront_distribution" "this" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
   aliases             = keys(local.flat_aliases)
+  price_class         = "PriceClass_100"
 
   origin {
-    domain_name = aws_s3_bucket.this.bucket_regional_domain_name
+    domain_name = aws_s3_bucket.this.website_endpoint
     origin_id   = local.s3_origin_id
 
     s3_origin_config {
