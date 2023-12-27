@@ -1,6 +1,5 @@
 name: Push Actions (infra deploy, app build & deploy)
 
-
 on:
   push:
     branches:
