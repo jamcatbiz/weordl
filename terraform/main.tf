@@ -58,7 +58,7 @@ resource "aws_cloudfront_distribution" "this" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  aliases             = local.flat_aliases
+  aliases             = keys(local.flat_aliases)
 
   origin {
     domain_name = aws_s3_bucket.this.bucket_regional_domain_name
