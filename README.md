@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Weordl is a daily free to play anagram word game. It is a web app built using SvelteKit for frontend, terraform for backend via AWS CloudFront -> S3 origin, and github actions CI/CD for infra and app.
+Weordl is a daily free to play anagram word game. It is a web app built using SvelteKit for frontend, terraform for backend via AWS CloudFront -> S3 origin, and github actions CI/CD for orchestrating infrastructure and application workflows like building, deploying, and reporting.
 
 ## Table of Contents
 
