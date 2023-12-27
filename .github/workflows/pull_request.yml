@@ -50,7 +50,7 @@ jobs:
         id: plan
         run: terraform plan -no-color -input=false -out=tfplan -var-file=./config/${{ github.base_ref }}.tfvars -var='source_control=${{ github.repository }}/${{ github.base_ref }}/${{ github.sha }}'
 
-      - name: Generate Plan Report
+      - name: Generate Plan Report Input
         id: show
         run: |
           terraform show -no-color tfplan > terraform.text
@@ -58,8 +58,8 @@ jobs:
 
       - uses: ahmadnassri/action-terraform-report@v3
         with:
-          terraform-text: ${{ github.workspace }}/terraform.text
-          terraform-json: ${{ github.workspace }}/terraform.json
+          terraform-text: ./terraform.text
+          terraform-json: ./terraform.json
           show-diff: true
           github-token: ${{ github.token }}
   app:
