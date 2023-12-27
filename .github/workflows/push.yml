@@ -103,4 +103,4 @@ jobs:
         run: aws s3 sync app/build/ s3://${{ needs.infra.outputs.s3_bucket_id }} --delete
 
       - name: Invalidate CloudFront
-        run: aws create-invalidation --distribution-id ${{ needs.infra.outputs.cloudfront_distribution_id }} --paths '/*'
+        run: aws cloudfront create-invalidation --distribution-id ${{ needs.infra.outputs.cloudfront_distribution_id }} --paths '/*'
