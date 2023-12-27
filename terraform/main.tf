@@ -58,6 +58,25 @@ resource "aws_cloudfront_origin_access_identity" "this" {
   comment = "OAI to protect AWS S3 bucket"
 }
 
+resource "aws_cloudfront_cache_policy" "this" {
+  name        = "${var.environment}-weordl"
+  comment     = "${var.environment} weordl cache policy"
+  default_ttl = 50
+  max_ttl     = 100
+  min_ttl     = 1
+  parameters_in_cache_key_and_forwarded_to_origin {
+    cookies_config {
+      cookie_behavior = "none"
+    }
+    headers_config {
+      header_behavior = "none"
+    }
+    query_strings_config {
+      query_string_behavior = "none"
+    }
+  }
+}
+
 resource "aws_cloudfront_distribution" "this" {
   enabled             = true
   is_ipv6_enabled     = true
@@ -78,6 +97,7 @@ resource "aws_cloudfront_distribution" "this" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     viewer_protocol_policy = "redirect-to-https"
+    cache_policy_id        = aws_cloudfront_cache_policy.this.id
   }
 
   restrictions {
