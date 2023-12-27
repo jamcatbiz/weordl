@@ -65,7 +65,7 @@ jobs:
       - name: Set Terraform Outputs
         id: output
         run: |
-          echo S3_BUCKET_ID=(terraform output -raw s3_bucket_id) >> $GITHUB_OUTPUT
+          echo S3_BUCKET_ID=$(terraform output -raw s3_bucket_id) >> $GITHUB_OUTPUT
           echo CLOUDFRONT_DISTRIBUTION_ID=$(terraform output -raw cloudfront_distribution_id) >> $GITHUB_OUTPUT
     outputs: 
       s3_bucket_id: ${{ steps.output.outputs.S3_BUCKET_ID }}
