@@ -60,7 +60,7 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply tfplan -no-color -input=false 
+        run: terraform apply -no-color -input=false tfplan
       
       - name: Set Terraform Outputs
         id: output
