@@ -96,7 +96,7 @@ resource "aws_route53_record" "a" {
   for_each = local.flat_records
 
   zone_id = var.hosted_zone_id
-  name    = each.value
+  name    = each.key
   type    = "A"
 
   alias {
@@ -110,7 +110,7 @@ resource "aws_route53_record" "aaaa" {
   for_each = local.flat_records
 
   zone_id = var.hosted_zone_id
-  name    = each.value
+  name    = each.key
   type    = "AAAA"
 
   alias {
