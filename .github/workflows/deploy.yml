@@ -62,17 +62,7 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: |
-          echo 'apply<<EOF' >> $GITHUB_OUTPUT
-          terraform apply -no-color -input=false tfplan >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
-
-      - name: Upload Terraform Apply Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: terraform-apply
-          path: ./terraform/tfapply
-          retention-days: 1
+        run: terraform apply -no-color -input=false tfplan
       
     outputs: 
       s3_bucket_id: ${{ steps.apply.outputs.s3_bucket_id }}
