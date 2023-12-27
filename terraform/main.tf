@@ -7,12 +7,12 @@ resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
   policy = templatefile("${path.module}/templates/s3_website_bucket_policy.json", {
     bucket_arn = aws_s3_bucket.this.arn
-    cf_oai_arn = aws_cloudfront_origin_access_identity.cf_oai.iam_arn
+    cf_oai_arn = aws_cloudfront_origin_access_identity.this.arn
   })
 }
 
 resource "aws_s3_bucket_public_access_block" "this" {
-  bucket                  = aws_s3_bucket.website.id
+  bucket                  = aws_s3_bucket.this.id
   ignore_public_acls      = true
   block_public_acls       = true
   restrict_public_buckets = true
@@ -107,9 +107,15 @@ resource "aws_route53_record" "a" {
 }
 
 resource "aws_route53_record" "aaaa" {
+  for_each = local.flat_records
+
   zone_id = var.hosted_zone_id
-  name    = "www.example.com"
+  name    = each.value
   type    = "AAAA"
-  ttl     = 300
-  records = [aws_eip.lb.public_ip]
+
+  alias {
+    name                   = aws_cloudfront_distribution.this.domain_name
+    zone_id                = aws_cloudfront_distribution.this.hosted_zone_id
+    evaluate_target_health = false
+  }
 }

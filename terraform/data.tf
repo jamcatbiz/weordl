@@ -10,7 +10,7 @@ locals {
   }
 
   flat_records = [for key, val in local.route53_records[var.environment] : val]
-  flat_aliases = [for key, val in local.route53_records[var.environment] : val if key != root]
+  flat_aliases = [for key, val in local.route53_records[var.environment] : val if key != "root"]
 
   s3_bucket_name = {
     prod = "weordl.com"
