@@ -80,7 +80,7 @@ resource "aws_cloudfront_distribution" "this" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  aliases             = keys(local.flat_aliases)
+  aliases             = local.route53_records[var.environment]
   price_class         = "PriceClass_100"
 
   origin {
@@ -119,7 +119,7 @@ import {
 ## ROUTE 53
 ## ------------------------------------------------------------
 resource "aws_route53_record" "a" {
-  for_each = local.flat_records
+  for_each = local.route53_records[var.environment]
 
   zone_id = var.hosted_zone_id
   name    = each.value
@@ -133,7 +133,7 @@ resource "aws_route53_record" "a" {
 }
 
 resource "aws_route53_record" "aaaa" {
-  for_each = local.flat_records
+  for_each = local.route53_records[var.environment]
 
   zone_id = var.hosted_zone_id
   name    = each.value
