@@ -58,8 +58,8 @@ jobs:
 
       - uses: ahmadnassri/action-terraform-report@v3
         with:
-          terraform-text: ./terraform.text
-          terraform-json: ./terraform.json
+          terraform-text: ./terraform/terraform.text
+          terraform-json: ./terraform/terraform.json
           show-diff: true
           github-token: ${{ github.token }}
   app:
