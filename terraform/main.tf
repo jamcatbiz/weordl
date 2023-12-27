@@ -80,7 +80,7 @@ resource "aws_cloudfront_distribution" "this" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  aliases             = local.route53_records[var.environment]
+  aliases             = values(local.route53_records[var.environment])
   price_class         = "PriceClass_100"
 
   origin {
