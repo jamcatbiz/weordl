@@ -7,10 +7,8 @@ Weordl is a daily free to play anagram word game. It is a web app built using Sv
 ## Table of Contents
 
 - [Background](#background)
-- [Install](#install)
-- [Infrastructure](#infrastructure)
-- [Application](#application)
-- [License](#license)
+- [Usage](#usage)
+- [Contributing](#contributing)
 
 ## Background
 
