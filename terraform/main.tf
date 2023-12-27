@@ -85,7 +85,7 @@ resource "aws_cloudfront_distribution" "this" {
   price_class         = "PriceClass_100"
 
   origin {
-    domain_name = aws_s3_bucket_website_configuration.this.website_domain
+    domain_name = aws_s3_bucket.this.bucket_regional_domain_name
     origin_id   = local.s3_origin_id
 
     s3_origin_config {
