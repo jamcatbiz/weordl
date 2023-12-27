@@ -50,7 +50,7 @@ jobs:
         id: plan
         run: |
           echo 'plan<<EOF' >> $GITHUB_OUTPUT
-          terraform plan -no-color -input=false -out=tfplan -var-file=${{ github.ref_name }}.tfvars -var='source_control=${{ github.repository }}/${{ github.ref_name }}/${{ github.sha }}'>> $GITHUB_OUTPUT
+          terraform plan -no-color -input=false -out=tfplan -var-file=./config/${{ github.ref_name }}.tfvars -var='source_control=${{ github.repository }}/${{ github.ref_name }}/${{ github.sha }}'>> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
       
       - name: Upload Terraform Plan Artifact
