@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "this" {
 
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
-  policy = templatefile("${path.module}/templates/s3_website_bucket_policy.json", {
+  policy = templatefile("${path.module}/templates/s3_bucket_policy.json", {
     bucket_arn = aws_s3_bucket.this.arn
     cf_oai_arn = aws_cloudfront_origin_access_identity.this.iam_arn
   })
