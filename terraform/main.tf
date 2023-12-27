@@ -76,6 +76,7 @@ resource "aws_cloudfront_cache_policy" "this" {
 }
 
 resource "aws_cloudfront_distribution" "this" {
+  comment             = "${var.environment} ${var.project}"
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
