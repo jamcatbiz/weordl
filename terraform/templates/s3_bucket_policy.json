@@ -2,15 +2,20 @@
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "OAIAccessOnly",
+      "Sid": "OACAccessOnly",
       "Effect": "Allow",
       "Principal": {
-        "AWS": [
-          "${cf_oai_arn}"
+        "Service": [
+          "cloudfront.amazonaws.com"
         ]
       },
       "Action": "s3:GetObject",
-      "Resource": "${bucket_arn}/*"
+      "Resource": "${s3_bucket_arn}/*",
+      "Condition": {
+        "StringEquals": {
+          "AWS:SourceArn": "${cloudfront_distribution_arn}"
+        }
+      }
     }
   ]
 }

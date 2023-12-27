@@ -1,4 +1,7 @@
-# Begin S3 Bucket
+## ------------------------------------------------------------
+## S3 BUCKET, ENCRYPTION, VERSIONING, POLICIES, ETC.
+## This implementation uses Origin Access Control to expose bucket.
+## ------------------------------------------------------------
 resource "aws_s3_bucket" "this" {
   bucket = local.s3_bucket_name[var.environment]
 }
@@ -10,8 +13,8 @@ import {
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
   policy = templatefile("${path.module}/templates/s3_bucket_policy.json", {
-    bucket_arn = aws_s3_bucket.this.arn
-    cf_oai_arn = aws_cloudfront_origin_access_identity.this.iam_arn
+    s3_bucket_arn               = aws_s3_bucket.this.arn
+    cloudfront_distribution_arn = aws_cloudfront_distribution.this.arn
   })
 }
 
@@ -41,26 +44,21 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   }
 }
 
-resource "aws_s3_bucket_website_configuration" "this" {
-  bucket = aws_s3_bucket.this.id
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "index.html"
-  }
-}
-
-# Begin Cloudfront
-resource "aws_cloudfront_origin_access_identity" "this" {
-  comment = "OAI to protect AWS S3 bucket"
+## ------------------------------------------------------------
+## CLOUDFRONT DISTRIBUTION, ORIGINS, POLICIES, ETC.
+## This implementation uses Origin Access Control to expose bucket.
+## ------------------------------------------------------------
+resource "aws_cloudfront_origin_access_control" "this" {
+  name                              = "${var.environment}-${var.project}"
+  description                       = "${var.environment} ${var.project} OAC"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }
 
 resource "aws_cloudfront_cache_policy" "this" {
-  name        = "${var.environment}-weordl"
-  comment     = "${var.environment} weordl cache policy"
+  name        = "${var.environment}-${var.project}"
+  comment     = "${var.environment} ${var.project} cache policy"
   default_ttl = 50
   max_ttl     = 100
   min_ttl     = 1
@@ -85,12 +83,9 @@ resource "aws_cloudfront_distribution" "this" {
   price_class         = "PriceClass_100"
 
   origin {
-    domain_name = aws_s3_bucket.this.bucket_regional_domain_name
-    origin_id   = local.s3_origin_id
-
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
-    }
+    domain_name              = aws_s3_bucket.this.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.this.id
+    origin_id                = local.s3_origin_id
   }
 
   default_cache_behavior {
@@ -113,14 +108,15 @@ resource "aws_cloudfront_distribution" "this" {
     ssl_support_method  = "sni-only"
   }
 
-
 }
 import {
   to = aws_cloudfront_distribution.this
   id = local.import_cloudfront_map[var.environment]
 }
 
-# Begin Route53
+## ------------------------------------------------------------
+## ROUTE 53
+## ------------------------------------------------------------
 resource "aws_route53_record" "a" {
   for_each = local.flat_records
 
