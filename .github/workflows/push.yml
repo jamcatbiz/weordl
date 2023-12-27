@@ -1,4 +1,5 @@
-name: Infra & App Deploy
+name: Push Actions (infra deploy, app build & deploy)
+
 
 on:
   push:
@@ -48,10 +49,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: |
-          echo 'plan<<EOF' >> $GITHUB_OUTPUT
-          terraform plan -no-color -input=false -out=tfplan -var-file=./config/${{ github.ref_name }}.tfvars -var='source_control=${{ github.repository }}/${{ github.ref_name }}/${{ github.sha }}'>> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+        run: terraform plan -no-color -input=false -out=tfplan -var-file=./config/${{ github.ref_name }}.tfvars -var='source_control=${{ github.repository }}/${{ github.ref_name }}/${{ github.sha }}'>> $GITHUB_OUTPUT
       
       - name: Upload Terraform Plan Artifact
         uses: actions/upload-artifact@v3
@@ -62,11 +60,16 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply -no-color -input=false tfplan
+        run: terraform apply tfplan -no-color -input=false 
       
+      - name: Set Terraform Outputs
+        id: output
+        run: |
+          echo "S3_BUCKET_ID=${terraform output s3_bucket_id -raw}" >> "$GITHUB_OUTPUT"
+          echo "CLOUDFRONT_DISTRIBUTION_ID=${terraform output cloudfront_distribution_id -raw}" >> "$GITHUB_OUTPUT"
     outputs: 
-      s3_bucket_id: ${{ steps.apply.outputs.s3_bucket_id }}
-      cloudfront_distribution_id: ${{ steps.apply.outputs.cloudfront_distribution_id }}
+      s3_bucket_id: ${{ steps.output.outputs.S3_BUCKET_ID }}
+      cloudfront_distribution_id: ${{ steps.output.outputs.CLOUDFRONT_DISTRIBUTION_ID  }}
   app:
     runs-on: ubuntu-latest
     needs: infra
