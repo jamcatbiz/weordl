@@ -7,7 +7,7 @@ resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
   policy = templatefile("${path.module}/templates/s3_website_bucket_policy.json", {
     bucket_arn = aws_s3_bucket.this.arn
-    cf_oai_arn = aws_cloudfront_origin_access_identity.this.arn
+    cf_oai_arn = aws_cloudfront_origin_access_identity.this.iam_arn
   })
 }
 
@@ -70,7 +70,7 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   default_cache_behavior {
-    target_origin_id       = lo
+    target_origin_id       = local.s3_origin_id
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     viewer_protocol_policy = "redirect-to-https"
@@ -79,7 +79,7 @@ resource "aws_cloudfront_distribution" "this" {
   restrictions {
     geo_restriction {
       locations        = []
-      restriction_type = none
+      restriction_type = "none"
     }
   }
 
