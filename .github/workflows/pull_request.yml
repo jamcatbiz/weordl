@@ -7,7 +7,25 @@ on:
     - beta
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      infra: ${{ steps.filter.outputs.infra }}
+      app: ${{ steps.filter.outputs.app }}
+    steps:
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          infra:
+            - 'terraform/**'
+          app:
+            - 'app/**'
   infra:
+    needs: changes
+    if: ${{ needs.changes.outputs.infra == 'true'}}
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.base_ref }}
@@ -64,12 +82,11 @@ jobs:
           show-diff: true
           github-token: ${{ github.token }}
   app:
+    needs: changes
+    if: ${{ needs.changes.outputs.app == 'true'}}
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.base_ref }}
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
