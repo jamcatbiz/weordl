@@ -91,10 +91,9 @@ jobs:
       s3_bucket_id: ${{ steps.output.outputs.S3_BUCKET_ID }}
       cloudfront_distribution_id: ${{ steps.output.outputs.CLOUDFRONT_DISTRIBUTION_ID  }}
   app:
-    needs: changes
+    needs: [changes, infra]
     if: ${{ needs.changes.outputs.app == 'true'}}
     runs-on: ubuntu-latest
-    needs: infra
     environment:
       name: ${{ github.ref_name }}
     permissions:
