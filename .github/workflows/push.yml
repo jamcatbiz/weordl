@@ -7,7 +7,28 @@ on:
     - beta
   
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      infra: ${{ steps.filter.outputs.infra }}
+      app: ${{ steps.filter.outputs.app }}
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          infra:
+            - 'terraform/**'
+          app:
+            - 'app/**'
   infra:
+    needs: changes
+    if: ${{ needs.changes.outputs.infra == 'true'}}
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.ref_name }}
@@ -70,8 +91,9 @@ jobs:
       s3_bucket_id: ${{ steps.output.outputs.S3_BUCKET_ID }}
       cloudfront_distribution_id: ${{ steps.output.outputs.CLOUDFRONT_DISTRIBUTION_ID  }}
   app:
+    needs: [changes, infra]
+    if: ${{ needs.changes.outputs.app == 'true'}}
     runs-on: ubuntu-latest
-    needs: infra
     environment:
       name: ${{ github.ref_name }}
     permissions:
