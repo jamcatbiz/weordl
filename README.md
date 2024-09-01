@@ -1,38 +1,13 @@
 # Weordl
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
-Weordl is a daily free to play anagram word game. It is a web app built using SvelteKit for frontend, terraform for backend via AWS CloudFront -> S3 origin, and github actions CI/CD for orchestrating infrastructure and application workflows like building, deploying, and reporting.
+Weordl is a daily free to play anagram word game. It is a web app built using SvelteKit for frontend, terraform for backend via AWS CloudFront -> S3 origin, and github actions CI/CD for orchestrating infrastructure and application workflows like building, deploying, and reporting. This repo only deploys the S3 backend origin, not the serving CDN.
 
 ## Table of Contents
 
-- [Background](#background)
 - [Usage](#usage)
 - [Contributing](#contributing)
 
-## Background
-
-The infrastructure as code for this app configures a standard cloudfront/s3 SPA with simple caching rules, but it assumes the account is already configured with a Route53 public hosted zone, terraform state buckets, ACM certificate all pre-created, and IAM roles for deployment and reporting.  This IaC was designed to support multiple environments across  multiple accounts. Terraform *.tfvars*  and *.s3.tfbackend* files should all have a prefix that matches a GitHub environment. See the terraform dir for full docs.
-
-The GitHub Actions Workflow files support validating and deploying infrastructure; building, validating, and deploying application code to s3; and cache busting. GitHub environments must exist to support  the following variables:
-- AWS_REGION: the target region hosting resources and endpoints
-- AWS_DEPLOY_ROLE: the role GitHub Actions will assume to deploy via OIDC. Contains account id information.
-- AWS_READ_ROLE: the role GitHub Actions will assume to read for reporting via OIDC. Contains account id information. 
-
-This  repo would be a good quickstart for simple svelte SPAs hosted on AWS S3 with infrastructure, builds, and deployments managed within GitHub Actions.
-
 ## Usage
-
-### Repository layout
-
-    .
-    ├── .github/workflows       # CI/CD orchestration
-    ├── app                     # Application code
-    ├── terraform               # Infrastructure as code, .tf files
-    │   ├── config              # .tfvars and .s3.tfbackend files
-    │   └── templates           # .json files or .json template files
-    ├── LICENSE
-    └── README.md
 
 ### Developing Application Code
 
@@ -55,11 +30,9 @@ npm run build
 
 ### Developing and Deploying Infrastructure
 
-Navigate to the `./terraform` folder
+This repo contains a `./infra/` folder with a terraform/opentofu project for configuring an s3 bucket to be an origin for some externally managed CDN, in our case AWS CloudFront.
 
-Make sure  terraform is installed. This code was tested with import blocks on v1.6.6, so make sure you're using the intended resources and versions. Set up your shell to whatever AWS account you would like to deploy to, edit the `.tfvars` and `.s3.tfbackend` files to target your environment, and run the terraform workflows: init, plan, apply.
-
-See the GitHub Actions workflow files for more details on deploy process.
+Project can easily be run locally, but a workflow `./github/workflows/deploy.yml` is provided for continuous deployment with a trunk based development/release paradigm.
 
 ## Contributing
 
