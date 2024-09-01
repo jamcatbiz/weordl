@@ -9,6 +9,7 @@ variable "environment" {
 variable "project" {
   description = "A name that labels this specific project within an app deploy."
   type        = string
+
 }
 variable "tf_state_bucket" {
   description = "The s3 bucket where state is stored."
@@ -20,6 +21,10 @@ variable "tf_state_key" {
 }
 variable "source_control" {
   description = "The source control repo of this deploy."
+  type        = string
+}
+variable "source_version" {
+  description = "Version string associated with release of this project."
   type        = string
 }
 variable "hosted_zone_id" {
