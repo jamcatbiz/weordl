@@ -39,7 +39,7 @@ jobs:
           role-session-name: github_actions_deploy_app_weordl
           aws-region: ${{ vars.AWS_REGION }}
       - id: do-tf
-        uses: jamcatbiz/do-tf@v0.4.0
+        uses: jamcatbiz/do-tf@v0.4.1
         with:
           tf_flavor: tofu
           dir_path: ./infra/
@@ -83,7 +83,7 @@ jobs:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
           role-session-name: github_actions_deploy_app_weordl
           aws-region: ${{ vars.AWS_REGION }}
-      - uses: jamcatbiz/do-tf@v0.4.0
+      - uses: jamcatbiz/do-tf@v0.4.1
         id: do-tf
         with:
           tf_flavor: tofu
@@ -112,7 +112,7 @@ jobs:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
           role-session-name: github_actions_deploy_app_weordl
           aws-region: ${{ vars.AWS_REGION }}
-      - uses: jamcatbiz/do-tf@v0.4.0
+      - uses: jamcatbiz/do-tf@v0.4.1
         with:
           tf_flavor: tofu
           dir_path: ./infra/
