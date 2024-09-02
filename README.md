@@ -36,4 +36,4 @@ Project can easily be run locally, but a workflow `./github/workflows/deploy.yml
 
 ## Contributing
 
-Not actively looking for contributions, but feel free to contact me with questions or commments.
+Not actively looking for contributions, but feel free to contact me with questions or commments. Thanks!
