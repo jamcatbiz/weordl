@@ -52,7 +52,7 @@ jobs:
             -var="source_control=${{ format('{0}/{1}/infra/', github.repository_owner, github.repository) }}"
             -var="source_version=${{ github.event.release.tag_name }}"
     outputs:
-      s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.tf_output).s3_bucket_id.value }}
+      s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.tf_output) }}
   beta-app-deploy:
     needs:
       - app-build
@@ -112,7 +112,8 @@ jobs:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
           role-session-name: github_actions_deploy_app_weordl
           aws-region: ${{ vars.AWS_REGION }}
-      - uses: jamcatbiz/do-tf@v0.4.2
+      - id: do-tf
+        uses: jamcatbiz/do-tf@v0.4.2
         with:
           tf_flavor: tofu
           dir_path: ./infra/
