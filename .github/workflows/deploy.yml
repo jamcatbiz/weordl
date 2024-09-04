@@ -70,7 +70,7 @@ jobs:
           retention-days: 1
       - run: |
           aws s3 sync app/build/ s3://${{ needs.beta-infra-apply.outputs.s3_bucket_id }} --delete
-          aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/weordl'
+          aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/games/weordl/*'
   prod-infra-plan:
     runs-on: ubuntu-latest
     permissions:
@@ -119,3 +119,21 @@ jobs:
           version: 1.8.1
           plan_only: false
           plan_artifact_name: needs.prod-infra-plan.outputs.plan_artifact_name
+  prod-app-deploy:
+    needs:
+      - app-build
+      - prod-infra-apply
+    environment: prod
+    runs-on:  ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: app/build
+          retention-days: 1
+      - run: |
+          aws s3 sync app/build/ s3://${{ needs.beta-infra-apply.outputs.s3_bucket_id }} --delete
+          aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/games/weordl/*'
