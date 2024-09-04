@@ -52,7 +52,7 @@ jobs:
             -var="source_control=${{ format('{0}/{1}/infra/', github.repository_owner, github.repository) }}"
             -var="source_version=${{ github.event.release.tag_name }}"
     outputs:
-      s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.output).s3_bucket_id.value }}
+      s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.tf_output).s3_bucket_id.value }}
   beta-app-deploy:
     needs:
       - app-build
@@ -119,6 +119,8 @@ jobs:
           version: 1.8.1
           plan_only: false
           plan_artifact_name: needs.prod-infra-plan.outputs.plan_artifact_name
+    outputs:
+      s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.tf_output).s3_bucket_id.value }}
   prod-app-deploy:
     needs:
       - app-build
@@ -135,5 +137,5 @@ jobs:
           path: app/build
           retention-days: 1
       - run: |
-          aws s3 sync app/build/ s3://${{ needs.beta-infra-apply.outputs.s3_bucket_id }} --delete
+          aws s3 sync app/build/ s3://${{ needs.prod-infra-apply.outputs.s3_bucket_id }} --delete
           aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/games/weordl/*'
