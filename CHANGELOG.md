@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/jamcatbiz/weordl/compare/v0.2.0...v0.3.0) (2024-09-22)
+
+
+### Features
+
+* changing s3 policy declaration and updating dependabot ([fcbcf4a](https://github.com/jamcatbiz/weordl/commit/fcbcf4a018091f31cebd77c961663048128b9831))
+
 ## [0.2.0](https://github.com/jamcatbiz/weordl/compare/v0.1.0...v0.2.0) (2024-09-22)
 
 
