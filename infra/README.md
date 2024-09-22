@@ -37,9 +37,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | The AWS region where the main provider will be pointed to. | `string` | n/a | yes |
-| <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | The AWS ACM certificate arn for SLL on the cloudfront. | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | The deployment stage/environment of this deploy (dev/staging/prod/etc.). | `string` | n/a | yes |
-| <a name="input_hosted_zone_id"></a> [hosted\_zone\_id](#input\_hosted\_zone\_id) | The AWS Route53 hosted zone where records should be created. | `string` | n/a | yes |
 | <a name="input_project"></a> [project](#input\_project) | A name that labels this specific project within an app deploy. | `string` | n/a | yes |
 | <a name="input_source_control"></a> [source\_control](#input\_source\_control) | The source control repo of this deploy. | `string` | n/a | yes |
 | <a name="input_source_version"></a> [source\_version](#input\_source\_version) | Version string associated with release of this project. | `string` | n/a | yes |

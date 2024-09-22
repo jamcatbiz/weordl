@@ -14,7 +14,7 @@ resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
   policy = templatefile("${path.module}/templates/s3_bucket_policy.json", {
     s3_bucket_arn               = aws_s3_bucket.this.arn
-    cloudfront_distribution_arn = aws_cloudfront_distribution.this.arn
+    cloudfront_distribution_arn = local.cloudfront_distribution_arn[var.environment]
   })
 }
 

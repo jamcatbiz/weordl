@@ -3,6 +3,10 @@ locals {
     prod = "weordl.com"
     beta = "beta.weordl.com"
   }
+  cloudfront_distribution_arn = {
+    prod = "arn:aws:cloudfront::784095588722:distribution/E5OECTRVHHRM6"
+    beta = "arn:aws:cloudfront::784095588722:distribution/E1HSOV269YG7ND"
+  }
 }
 
 data "aws_iam_policy_document" "s3_bucket" {
@@ -20,7 +24,7 @@ data "aws_iam_policy_document" "s3_bucket" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = toset([aws_cloudfront_distribution.this.arn])
+      values   = toset([local.cloudfront_distribution_arn[var.environment]])
     }
   }
 }
