@@ -12,10 +12,7 @@ import {
 
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
-  policy = templatefile("${path.module}/templates/s3_bucket_policy.json", {
-    s3_bucket_arn               = aws_s3_bucket.this.arn
-    cloudfront_distribution_arn = local.cloudfront_distribution_arn[var.environment]
-  })
+  policy = data.aws_iam_policy_document.s3_bucket.json
 }
 
 resource "aws_s3_bucket_public_access_block" "this" {

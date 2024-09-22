@@ -6,12 +6,12 @@ updates:
     interval: daily
     time: "13:00"
 - package-ecosystem: "npm"
-  directory: "/"
+  directory: "/app"
   schedule:
     interval: daily
     time: "13:00"
 - package-ecosystem: "terraform"
-  directory: "/"
+  directory: "/infra"
   schedule:
     interval: daily
     time: "13:00"  
