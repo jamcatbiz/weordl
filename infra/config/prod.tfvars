@@ -1,2 +1,2 @@
-environment     = "prod"
-tf_state_key    = "weordl/prod.tfstate"
+environment  = "prod"
+tf_state_key = "weordl/prod.tfstate"
