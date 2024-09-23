@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.1](https://github.com/jamcatbiz/weordl/compare/v0.6.0...v0.6.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* merge ([f6c2f60](https://github.com/jamcatbiz/weordl/commit/f6c2f605f5904ca0adfa81b6ab082a92894ce7a9))
+* **workflows:** fixing beta apply output ([a069701](https://github.com/jamcatbiz/weordl/commit/a069701117f22e300c5d950ffcd0cfd0abc3a5db))
+
 ## [0.6.0](https://github.com/jamcatbiz/weordl/compare/v0.5.0...v0.6.0) (2024-09-23)
 
 
