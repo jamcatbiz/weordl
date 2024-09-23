@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/jamcatbiz/weordl/compare/v0.3.0...v0.4.0) (2024-09-23)
+
+
+### Features
+
+* bumping do-tf ([761aafc](https://github.com/jamcatbiz/weordl/commit/761aafc7b524d03e7593f39d166c5c923499c9ba))
+
 ## [0.3.0](https://github.com/jamcatbiz/weordl/compare/v0.2.0...v0.3.0) (2024-09-22)
 
 
