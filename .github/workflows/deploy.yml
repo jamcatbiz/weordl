@@ -52,7 +52,7 @@ jobs:
             -var="source_control=${{ format('{0}/{1}/infra/', github.repository_owner, github.repository) }}"
             -var="source_version=${{ github.event.release.tag_name }}"
     outputs:
-      s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.tf_output) }}
+      s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.tf_output).s3_bucket_id.value }}
   beta-app-deploy:
     needs:
       - app-build
