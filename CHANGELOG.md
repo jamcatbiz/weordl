@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/jamcatbiz/weordl/compare/v0.6.1...v0.7.0) (2024-09-26)
+
+
+### Features
+
+* **workflows:** app-build download artifact update ([91161b6](https://github.com/jamcatbiz/weordl/commit/91161b64167c7415601a06c6cf982c640d2d8348))
+
 ## [0.6.1](https://github.com/jamcatbiz/weordl/compare/v0.6.0...v0.6.1) (2024-09-23)
 
 
