@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.2](https://github.com/jamcatbiz/weordl/compare/v0.7.1...v0.7.2) (2024-09-28)
+
+
+### Bug Fixes
+
+* package copy error ([f6203ff](https://github.com/jamcatbiz/weordl/commit/f6203ff121925e0019da9a500ee3c6302f954d70))
+
 ## [0.7.1](https://github.com/jamcatbiz/weordl/compare/v0.7.0...v0.7.1) (2024-09-28)
 
 
