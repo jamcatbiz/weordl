@@ -1,10 +1,10 @@
-name: Deploys a Release
-
+name: '[Deploy] Release'
 on:
   release:
     types: [released]
 jobs:
   app-build: 
+    name: build app
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -26,6 +26,7 @@ jobs:
           path: app/build
           retention-days: 1
   beta-infra-apply:
+    name: plan and apply beta infra changes
     environment: beta
     runs-on: ubuntu-latest
     permissions:
@@ -54,6 +55,7 @@ jobs:
     outputs:
       s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.tf_output).s3_bucket_id.value }}
   beta-app-deploy:
+    name: deploy app to beta origin
     needs:
       - app-build
       - beta-infra-apply
@@ -63,15 +65,22 @@ jobs:
       id-token: write
       contents: read
     steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
+          role-session-name: github_actions_deploy_app_weordl
+          aws-region: ${{ vars.AWS_REGION }}
       - uses: actions/download-artifact@v4
         with:
           name: app-build
-          path: ./
+          path: app/build
           retention-days: 1
-      - run: |
+      - name: sync S3 and invalidate cache
+        run: |
           aws s3 sync app/build/ s3://${{ needs.beta-infra-apply.outputs.s3_bucket_id }} --delete
-          aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/games/weordl/*'
+          aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '${{ vars.INVALIDATION_PATH }}'
   prod-infra-plan:
+    name: plan prod infra changes
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -99,6 +108,7 @@ jobs:
     outputs:
       plan_artifact_name: steps.do-tf.outputs.plan_artifact_name
   prod-infra-apply:
+    name: apply prod infra plan
     needs: [prod-infra-plan]
     runs-on: ubuntu-latest
     environment: prod
@@ -120,9 +130,12 @@ jobs:
           version: 1.8.1
           plan_only: false
           plan_artifact_name: needs.prod-infra-plan.outputs.plan_artifact_name
+          init_args: >-
+            -backend-config="./config/prod.s3.tfbackend"
     outputs:
       s3_bucket_id: ${{ fromJSON(steps.do-tf.outputs.tf_output).s3_bucket_id.value }}
   prod-app-deploy:
+    name: deploy app to prod origin
     needs:
       - app-build
       - prod-infra-apply
@@ -132,11 +145,16 @@ jobs:
       id-token: write
       contents: read
     steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
+          role-session-name: github_actions_deploy_app_weordl
+          aws-region: ${{ vars.AWS_REGION }}
       - uses: actions/download-artifact@v4
         with:
           name: app-build
-          path: ./
-          retention-days: 1
-      - run: |
+          path: app/build
+      - name: sync S3 and invalidate cache
+        run: |
           aws s3 sync app/build/ s3://${{ needs.prod-infra-apply.outputs.s3_bucket_id }} --delete
-          aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/games/weordl/*'
+          aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '${{ vars.INVALIDATION_PATH }}'
