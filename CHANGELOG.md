@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/jamcatbiz/weordl/compare/v0.7.0...v0.7.1) (2024-09-28)
+
+
+### Bug Fixes
+
+* updating deploy process and restructuing gitignore ([a0fbd8f](https://github.com/jamcatbiz/weordl/commit/a0fbd8fcab0c1cc844daca37fe1fb483b6bd2439))
+
 ## [0.7.0](https://github.com/jamcatbiz/weordl/compare/v0.6.1...v0.7.0) (2024-09-26)
 
 
