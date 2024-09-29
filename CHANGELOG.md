@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.3](https://github.com/jamcatbiz/weordl/compare/v0.7.2...v0.7.3) (2024-09-29)
+
+
+### Bug Fixes
+
+* **infra:** adding website config ([1995645](https://github.com/jamcatbiz/weordl/commit/1995645344ec8eb143387d50cab34a34d2538dc2))
+
 ## [0.7.2](https://github.com/jamcatbiz/weordl/compare/v0.7.1...v0.7.2) (2024-09-28)
 
 
