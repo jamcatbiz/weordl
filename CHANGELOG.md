@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/jamcatbiz/weordl/compare/v0.8.2...v0.9.0) (2024-10-05)
+
+
+### Features
+
+* **app:** vite config and misc ([b980cf0](https://github.com/jamcatbiz/weordl/commit/b980cf0c61dff3f74923261970a157f981d2b668))
+
 ## [0.8.2](https://github.com/jamcatbiz/weordl/compare/v0.8.1...v0.8.2) (2024-10-05)
 
 
