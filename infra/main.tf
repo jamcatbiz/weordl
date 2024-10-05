@@ -5,10 +5,6 @@
 resource "aws_s3_bucket" "this" {
   bucket = local.s3_bucket_name[var.environment]
 }
-import {
-  to = aws_s3_bucket.this
-  id = local.s3_bucket_name[var.environment]
-}
 
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
