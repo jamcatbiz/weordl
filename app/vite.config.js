@@ -17,7 +17,7 @@ export default defineConfig({
     include: ['src/**/*.{test,spec}.{js,ts}']
   },
   server: {
-    host: true
+    host: true,
     base: '/games/weordl/'
   }
 });
