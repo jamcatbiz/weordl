@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.2](https://github.com/jamcatbiz/weordl/compare/v0.8.1...v0.8.2) (2024-10-05)
+
+
+### Bug Fixes
+
+* **app:** base path string ([0d147b0](https://github.com/jamcatbiz/weordl/commit/0d147b0dfd6e949b55d9f64155e243e5dcb59975))
+
 ## [0.8.1](https://github.com/jamcatbiz/weordl/compare/v0.8.0...v0.8.1) (2024-10-05)
 
 
