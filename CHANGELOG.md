@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.1](https://github.com/jamcatbiz/weordl/compare/v0.8.0...v0.8.1) (2024-10-05)
+
+
+### Bug Fixes
+
+* **app:** json formatting ([7b34df1](https://github.com/jamcatbiz/weordl/commit/7b34df12f4624fab8a28f00d9b62aaf693b7ba0f))
+
 ## [0.8.0](https://github.com/jamcatbiz/weordl/compare/v0.7.3...v0.8.0) (2024-10-05)
 
 
