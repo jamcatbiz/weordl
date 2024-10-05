@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.0](https://github.com/jamcatbiz/weordl/compare/v0.7.3...v0.8.0) (2024-10-05)
+
+
+### Features
+
+* **app:** setting base path for jamescate.com ([14746ef](https://github.com/jamcatbiz/weordl/commit/14746ef08af4da1afdc02302932e92a1843385ee))
+* **infra:** infra updates ([377c5a0](https://github.com/jamcatbiz/weordl/commit/377c5a06f306b142267f5fb34f18dedf32269cf3))
+
 ## [0.7.3](https://github.com/jamcatbiz/weordl/compare/v0.7.2...v0.7.3) (2024-09-29)
 
 
