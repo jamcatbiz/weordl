@@ -10,6 +10,7 @@ const config = {
     adapter: adapter(),
     paths: {
       relative:false
+      base: '/games/weordl/'
     },
     alias: {
       src: path.resolve('./src'),
